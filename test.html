@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title></title>
+        <script type="text/javascript" src="jquery.js"></script>
+        <script type="text/javascript">
+	//<![CDATA[
+            $(function () {
+                log($('body')[0].attr('test'), $('body')[0].css('width'), document instanceof HTMLDocument);
+                log(1,2,3, [1,2,3], {"1":'2','3':"4"}, '<div test="dfdf" />'.toDom());
+                $(function () { log('postReady')});
+                var b = $($('body *'));
+                //b.forEach(function(e) { log(e)});
+                log(b.length, b[0]);
+                try{
+                    el = '<div>test</div>'.toDom().html('<div>test1</div><div>test2</div><div>test3</div> dfdfd');
+                    log(el.html());
+                    log(el.textContent);
+                    log(el.toXml());
+                    log(el.is('div'));
+                    el.textContent = 'sdsd';
+                    log(el.html());
+                    log(el.textContent);
+                    log(el.toXml());
+                }catch(e) {log(e.toString());}
+            });
+
+            function log() {
+                if (!log.console) log.console = document.getElementById('console');
+                arguments.forEach(function(el){
+                    try{
+                        if(el instanceof Element){
+                            log.console.write(el.toXml());
+                        }else{
+                            log.console.write(JSON.stringify(el)+" ");
+                        }
+
+                    }catch(e){
+                        log.console.write(" Error: "+e);
+                    }
+                });
+                log.console.write("\n")
+            }
+			///]]>
+        </script>
+    </head>
+    <body test="[qw,1]">
+        <code><pre id="console"></pre></code>
+    </body>
+</html>
